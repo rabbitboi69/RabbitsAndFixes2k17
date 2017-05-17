@@ -21,7 +21,6 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        Simulation Sim;
         int MenuOption;
         int LandscapeSize;
         int InitialWarrenCount;
@@ -50,7 +49,7 @@ public class Main {
                     Variability = Console.readInteger("Randomness variability (percent): ");
                     FixedInitialLocations = false;
                 }
-                Sim = new Simulation(LandscapeSize, InitialWarrenCount, InitialFoxCount, Variability, FixedInitialLocations);
+                new Simulation(LandscapeSize, InitialWarrenCount, InitialFoxCount, Variability, FixedInitialLocations).run();
             }
         } while (MenuOption != 3);
         Console.readLine();
@@ -81,15 +80,15 @@ class Simulation {
 
     public Simulation(int LandscapeSize, int InitialWarrenCount,
             int InitialFoxCount, int Variability, Boolean FixedInitialLocations) {
-        int MenuOption;
-        int x;
-        int y;
-        String ViewRabbits;
         this.LandscapeSize = LandscapeSize;
         this.Variability = Variability;
         Landscape = new Location[LandscapeSize][LandscapeSize];
         CreateLandscapeAndAnimals(InitialWarrenCount, InitialFoxCount, FixedInitialLocations);
+    }
+
+    public void run() {
         DrawLandscape();
+        int MenuOption;
         do {
             Console.println();
             Console.println("1. Advance to next time period showing detail");
@@ -110,18 +109,18 @@ class Simulation {
                 AdvanceTimePeriod();
             }
             if (MenuOption == 3) {
-                x = InputCoordinate('x');
-                y = InputCoordinate('y');
+                int x = InputCoordinate('x');
+                int y = InputCoordinate('y');
                 if (Landscape[x][y].Fox != null) {
                     Landscape[x][y].Fox.Inspect();
                 }
             }
             if (MenuOption == 4) {
-                x = InputCoordinate('x');
-                y = InputCoordinate('y');
+                int x = InputCoordinate('x');
+                int y = InputCoordinate('y');
                 if (Landscape[x][y].Warren != null) {
                     Landscape[x][y].Warren.Inspect();
-                    ViewRabbits = Console.readLine("View individual rabbits (y/n)?");
+                    String ViewRabbits = Console.readLine("View individual rabbits (y/n)?");
                     if (ViewRabbits.equals("y")) {
                         Landscape[x][y].Warren.ListRabbits();
                     }
