@@ -1,5 +1,5 @@
 
-package rabbitsandfoxes;
+package co.uk.rx14.rabbitsandfoxes;
 
 import java.io.BufferedReader;
 import java.io.IOException;

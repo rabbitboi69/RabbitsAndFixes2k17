@@ -14,7 +14,7 @@
  *
  *
  */
-package rabbitsandfoxes;
+package co.uk.rx14.rabbitsandfoxes;
 
 import java.util.Random;
 
