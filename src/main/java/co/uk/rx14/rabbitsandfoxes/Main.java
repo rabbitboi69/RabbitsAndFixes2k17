@@ -16,7 +16,12 @@
  */
 package co.uk.rx14.rabbitsandfoxes;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
 
@@ -93,9 +98,10 @@ class Simulation {
             Console.println();
             Console.println("1. Advance to next time period showing detail");
             Console.println("2. Advance to next time period hiding detail");
-            Console.println("3. Inspect fox");
-            Console.println("4. Inspect warren");
-            Console.println("5. Exit");
+            Console.println("3. Advance to next time period continually");
+            Console.println("4. Inspect fox");
+            Console.println("5. Inspect warren");
+            Console.println("6. Exit");
             Console.println();
             MenuOption = Console.readInteger("Select option: ");
             if (MenuOption == 1) {
@@ -109,13 +115,33 @@ class Simulation {
                 AdvanceTimePeriod();
             }
             if (MenuOption == 3) {
+                while (true) {
+                    TimePeriod += 1;
+                    ShowDetail = false;
+                    AdvanceTimePeriod();
+                    
+                    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException ignored) {
+                    }
+                    try {
+                        if (in.ready()) {
+                            in.readLine();
+                            break;
+                        }
+                    } catch (IOException ex) {
+                    }
+                }
+            }
+            if (MenuOption == 4) {
                 int x = InputCoordinate('x');
                 int y = InputCoordinate('y');
                 if (Landscape[x][y].Fox != null) {
                     Landscape[x][y].Fox.Inspect();
                 }
             }
-            if (MenuOption == 4) {
+            if (MenuOption == 5) {
                 int x = InputCoordinate('x');
                 int y = InputCoordinate('y');
                 if (Landscape[x][y].Warren != null) {
@@ -126,7 +152,7 @@ class Simulation {
                     }
                 }
             }
-        } while ((WarrenCount > 0 || FoxCount > 0) && MenuOption != 5);
+        } while ((WarrenCount > 0 || FoxCount > 0) && MenuOption != 6);
         Console.readLine();
     }
 
